@@ -12,7 +12,7 @@ jobs:
         with:
           flutter-version: '2.5.0'
       - name: Build apk
-        run: |
+        run:
           flutter pub get
           flutter format --set-exit-if-changed .
           flutter analyze
