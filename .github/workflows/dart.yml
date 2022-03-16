@@ -1,20 +1,43 @@
-name: build
-on:
-  push:
-    branches: [ master ]
+on: push
+name: build and test app
 jobs:
-  build-apk:
+  build:
+    name: install dependencies
     runs-on: ubuntu-latest
     steps:
-      - name: Flutter action
-        uses: subosito/flutter-action@v2.3.0
-        with:
-          flutter-version: 2.10.3
-          channel: stable
-      - name: Build apk
-        run:
-          flutter pub get
-          flutter format --set-exit-if-changed
-          flutter analyze
-          flutter test
-          flutter build apk --debug
+    - uses: actions/checkout@v1
+
+    - name: install dependencies
+      uses: steebchen/flutter@v1.1.0
+      with:
+        args: pub get
+
+    - name: run tests
+      uses: steebchen/flutter@v1.1.0
+      with:
+        args: test
+
+    - name: build apk
+      uses: steebchen/flutter@v1.1.0
+      with:
+        args: build apk --release
+#name: build
+#on:
+#  push:
+#    branches: [ master ]
+#jobs:
+#  build-apk:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Flutter action
+#        uses: subosito/flutter-action@v2.3.0
+#        with:
+#          flutter-version: 2.10.3
+#          channel: stable
+#      - name: Build apk
+#        run:
+#          flutter pub get
+#          flutter format --set-exit-if-changed
+#          flutter analyze
+#          flutter test
+#          flutter build apk --debug
